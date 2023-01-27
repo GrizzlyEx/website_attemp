@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>misha</title>
+</head>
+<body>
+<script type="text/javascript" language="JavaScript">
+function misha_phone() {
+  var replacement1 = document.getElementById('phone_1').value.replace(/[-()\s]/g, '');
+  var replacement2 = document.getElementById('phone_2').value.replace(/[-()\s]/g, '');
+  var list1 = replacement1.split('+');
+  var list2 = replacement2.split('+');
+  var matched = []
+  for (i = 0; i < list1.length; i++) {
+  for (i1 = 0; i1 < list2.length; i1++) {
+  if (list1[i] == list2[i1]) matched.push(list1[i])
+  }
+  };
+  document.getElementById('output').innerHTML = matched.join('<br>+');
+};
+</script>
+
+<div>
+
+    <form name="general">
+    <h2>Введи телефоны</h2>
+        <textarea id="phone_1" name="phone_1"></textarea>
+    <h2>Введи телефоны, но уже другие</h2>
+        <textarea id="phone_2" name="phone_2"></textarea>
+    <p/>
+        <button type="button" onclick="misha_phone();"><strong>Найти повторы</strong></button>
+    </form>
+
+</div>
+<p/>
+<div id="output">
+
+</div>
+
+
+</body>
+</html>
