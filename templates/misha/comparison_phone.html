@@ -8,17 +8,47 @@
 <body>
 <script type="text/javascript" language="JavaScript">
 function misha_phone() {
-  var replacement1 = document.getElementById('phone_1').value.replace(/[-()\s]/g, '');
-  var replacement2 = document.getElementById('phone_2').value.replace(/[-()\s]/g, '');
-  var list1 = replacement1.split('+');
-  var list2 = replacement2.split('+');
-  var matched = []
-  for (i = 0; i < list1.length; i++) {
-  for (i1 = 0; i1 < list2.length; i1++) {
-  if (list1[i] == list2[i1]) matched.push(list1[i])
-  }
+  var replacement1 = document.getElementById('phone_1').value;
+  var replacement2 = document.getElementById('phone_2').value;
+  var replacement3 = document.getElementById('phone_3').value;
+  var list1 = [];
+  var list2 = [];
+  var temp = []
+  var list3 = [];
+  var matched = [];
+  function aSort(a, b){
+    return b.length - a.length;
+}
+
+  if (replacement1 !== '') list1 = replacement1.replace(/[-()\s]/g, '').split('+');
+  if (replacement2 !== '') list2 = replacement2.replace(/[-()\s]/g, '').split('+');
+  if (replacement3 !== '') {
+    temp = replacement3.split('"');
+    for (i = 0; i < temp.length; i++) {
+      if (/^7([0-9]{10})$/g.test(temp[i])) {
+        list3.push(temp[i]);
+      }
+    }
   };
-  document.getElementById('output').innerHTML = matched.join('<br>+');
+  var list = [list1, list2, list3];
+  list.sort(aSort);
+
+  for (i = 0; i < list[0].length; i++) {
+    for (i1 = 0; i1 < list[1].length; i1++) {
+      if (list[0][i] == list[1][i1]) {
+        matched.push(list[0][i])
+      } else {
+        for (i2 = 0; i2 < list[2].length; i2++) {
+          if (list[0][i] == list[2][i2] || list[1][i1] == list[2][i2]) {
+            matched.push(list[2][i2]);
+          }
+        }
+      }
+    }
+  };
+
+  let matched1 = Array.from(new Set(matched));
+  document.getElementById('output').innerHTML = matched1.join('<br>+');
 };
 </script>
 
@@ -29,6 +59,9 @@ function misha_phone() {
         <textarea id="phone_1" name="phone_1"></textarea>
     <h2>Введи телефоны, но уже другие</h2>
         <textarea id="phone_2" name="phone_2"></textarea>
+        <p><br></p>
+    <h3>Введи непонятные строки с дрома</h3>
+        <textarea id="phone_3" name="phone_3"></textarea>
     <p/>
         <button type="button" onclick="misha_phone();"><strong>Найти повторы</strong></button>
     </form>
