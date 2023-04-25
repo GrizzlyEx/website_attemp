@@ -9,5 +9,8 @@ def post_list(request):
 def misha(request):
     return render(request, 'misha/comparison_phone.html', {})
 
-def kirill_besish(request):
-    return render(request, 'kirill_besish/ostatki_nelikvid.html', {})
+def rishat(request):
+    return render(request, 'rishat/test.html', {})
+
+def zametki(request):
+    return render(request, 'zametki/zametki.html', {})
